@@ -1,0 +1,29 @@
+/* 
+    recenzije, komentari, rang liste
+    */
+
+.review { padding: 20px 0; border-top: 2px solid var(--color-divider); }
+.review-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.review-text { font-size: 14px; line-height: 1.6; margin: 0 0 8px; max-width: 70ch; }
+.comments {
+  margin-top: 10px; padding-left: 20px; border-left: 2px solid var(--color-divider);
+  display: flex; flex-direction: column; gap: 10px; max-width: 60ch;
+}
+.comment { font-size: 13px; }
+.comment-author { font-weight: 700; }
+.comment-date { opacity: .5; font-size: 11px; margin-left: 6px; }
+.comment p { margin: 2px 0 0; }
+.comment-form { display: flex; gap: 8px; }
+
+/*  rang liste  */
+.rank-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 0; border-top: 2px solid var(--color-divider);
+}
+.rank-no { display: flex; align-items: center; gap: 8px; width: 48px; flex: none; }
+.rank-dot { width: 8px; height: 8px; background: var(--color-accent); flex: none; }
+.rank-num { font-family: var(--font-heading); font-weight: 800; font-size: 18px; }
+.rank-main { flex: 1; min-width: 0; display: block; }
+.rank-title { display: block; font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rank-meta { display: block; font-size: 12px; opacity: .6; }
+a.rank-row:hover .rank-title { color: var(--color-accent-700); }

@@ -1,0 +1,57 @@
+/* 
+    gumbi, forme, filteri
+    */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 2px solid var(--color-divider);
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .12s ease, color .12s ease;
+}
+.btn:hover { background: var(--color-text); color: var(--color-bg); text-decoration: none; }
+.btn:disabled { opacity: .35; cursor: not-allowed; }
+.btn:disabled:hover { background: transparent; color: var(--color-text); }
+.btn-primary { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
+.btn-primary:hover { background: var(--color-accent-700); border-color: var(--color-accent-700); color: #fff; }
+.btn-secondary { background: var(--color-surface); }
+.btn-ghost { border-color: transparent; background: transparent; }
+.btn-ghost:hover { background: transparent; color: var(--color-accent-700); text-decoration: underline; }
+.btn-icon { padding: 6px; }
+.btn-block { width: 100%; }
+.btn-sm { padding: 4px 8px; font-size: 12px; }
+
+/* ---------- forme ---------- */
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field > label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .08em; opacity: .6; font-weight: 700;
+}
+.input {
+  padding: 9px 10px;
+  border: 2px solid var(--color-divider);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 14px;
+  width: 100%;
+}
+.input:focus { outline: 3px solid var(--color-accent); outline-offset: 0; }
+textarea.input { resize: vertical; }
+.form-narrow { max-width: 400px; margin: 20px auto; }
+.form-stack { display: flex; flex-direction: column; gap: 14px; }
+.field-error, .validation-summary { color: var(--color-accent-700); font-size: 12px; margin: 4px 0 0; }
+.validation-summary ul { margin: 0; padding-left: 16px; }
+
+/* ---------- filteri kataloga ---------- */
+.filters {
+  display: flex; gap: var(--space-4); flex-wrap: wrap; align-items: end;
+  margin-bottom: var(--space-6); padding-bottom: 20px; border-bottom: 2px solid var(--color-divider);
+}

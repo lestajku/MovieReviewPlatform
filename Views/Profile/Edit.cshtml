@@ -1,0 +1,43 @@
+@model EditProfileViewModel
+@{
+    ViewData["Title"] = "Edit profile";
+}
+
+<div class="form-narrow">
+    <h1 style="font-size:26px;margin:0 0 20px">Edit profile</h1>
+
+    <form asp-controller="Profile" asp-action="Edit" method="post" class="form-stack">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+        <div class="field">
+            <label asp-for="FirstName"></label>
+            <input class="input" asp-for="FirstName" autocomplete="given-name" />
+            <span asp-validation-for="FirstName" class="field-error"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="LastName"></label>
+            <input class="input" asp-for="LastName" autocomplete="family-name" />
+            <span asp-validation-for="LastName" class="field-error"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="Email"></label>
+            <input class="input" asp-for="Email" type="email" />
+            <span asp-validation-for="Email" class="field-error"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="Bio"></label>
+            <textarea class="input" asp-for="Bio" rows="3"></textarea>
+            <span asp-validation-for="Bio" class="field-error"></span>
+        </div>
+
+        <div style="display:flex;gap:8px">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <a class="btn btn-secondary" asp-controller="Profile" asp-action="Index">Cancel</a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,132 @@
+@model AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<h1 style="font-size:26px;margin:0 0 20px">Admin panel</h1>
+
+<div class="seg" style="margin-bottom:24px">
+    <a class="seg-opt @(Model.Tab == "movies" ? "is-active" : "")" asp-action="Index" asp-route-tab="movies">Movies</a>
+    <a class="seg-opt @(Model.Tab == "users" ? "is-active" : "")" asp-action="Index" asp-route-tab="users">Users</a>
+    <a class="seg-opt @(Model.Tab == "reviews" ? "is-active" : "")" asp-action="Index" asp-route-tab="reviews">Reviews</a>
+    <a class="seg-opt @(Model.Tab == "stats" ? "is-active" : "")" asp-action="Index" asp-route-tab="stats">Stats</a>
+</div>
+
+@if (Model.Tab == "movies")
+{
+    <div style="display:flex;justify-content:flex-end;margin-bottom:12px">
+        <a class="btn btn-primary" asp-action="CreateMovie">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+            Add movie
+        </a>
+    </div>
+    <div class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr><th>Title</th><th>Year</th><th>Genre</th><th>Rating</th><th>Reviews</th><th></th></tr>
+            </thead>
+            <tbody>
+            @foreach (var movie in Model.Movies)
+            {
+                <tr>
+                    <td>@movie.Title</td>
+                    <td>@movie.Year</td>
+                    <td>@movie.GenresText</td>
+                    <td>@movie.RatingText</td>
+                    <td>@movie.ReviewCount</td>
+                    <td>
+                        <div class="actions-right">
+                            <a class="btn btn-ghost btn-sm" asp-action="EditMovie" asp-route-id="@movie.Id">Edit</a>
+                            <form asp-action="DeleteMovie" method="post" class="inline-form"
+                                  onsubmit="return confirm('Delete this movie? This also removes its reviews, comments and favorites.');">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@movie.Id" />
+                                <button type="submit" class="btn btn-ghost btn-sm">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+else if (Model.Tab == "users")
+{
+    <div class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr><th>User</th><th>Email</th><th>Role</th><th>Reviews</th><th>Joined</th><th></th></tr>
+            </thead>
+            <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td><span class="@user.RoleTagClass">@user.RoleLabel</span></td>
+                    <td>@user.ReviewCount</td>
+                    <td>@user.JoinedAt.ToString("MMM d, yyyy")</td>
+                    <td>
+                        <div class="actions-right">
+                            <form asp-action="ToggleRole" method="post" class="inline-form">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@user.Id" />
+                                <button type="submit" class="btn btn-ghost btn-sm" disabled="@user.RoleToggleDisabled">@user.ToggleRoleLabel</button>
+                            </form>
+                            <form asp-action="DeleteUser" method="post" class="inline-form"
+                                  onsubmit="return confirm('Delete this user? Their reviews, comments and favorites go too.');">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@user.Id" />
+                                <button type="submit" class="btn btn-ghost btn-sm" disabled="@user.DeleteDisabled">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+else if (Model.Tab == "reviews")
+{
+    <div class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr><th>Movie</th><th>User</th><th>Rating</th><th>Review</th><th>Date</th><th></th></tr>
+            </thead>
+            <tbody>
+            @foreach (var review in Model.Reviews)
+            {
+                <tr>
+                    <td><a asp-controller="Movies" asp-action="Details" asp-route-id="@review.MovieId">@review.MovieTitle</a></td>
+                    <td>@review.Username</td>
+                    <td>@review.RatingText</td>
+                    <td style="max-width:280px">@review.Snippet</td>
+                    <td>@review.CreatedAt.ToString("MMM d, yyyy")</td>
+                    <td>
+                        <div class="actions-right">
+                            <form asp-action="DeleteReview" method="post" class="inline-form"
+                                  onsubmit="return confirm('Delete this review and its comments?');">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@review.Id" />
+                                <button type="submit" class="btn btn-ghost btn-sm">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="stats-grid">
+        <div class="card"><div class="card-kicker">Users</div><div class="card-title stat-value">@Model.Stats.TotalUsers</div></div>
+        <div class="card"><div class="card-kicker">Movies</div><div class="card-title stat-value">@Model.Stats.TotalMovies</div></div>
+        <div class="card"><div class="card-kicker">Reviews</div><div class="card-title stat-value">@Model.Stats.TotalReviews</div></div>
+        <div class="card"><div class="card-kicker">Comments</div><div class="card-title stat-value">@Model.Stats.TotalComments</div></div>
+        <div class="card"><div class="card-kicker">Platform avg. rating</div><div class="card-title stat-value">@Model.Stats.AverageRatingText</div></div>
+    </div>
+}

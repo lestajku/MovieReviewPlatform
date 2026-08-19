@@ -1,0 +1,57 @@
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Sign up";
+}
+
+<div class="form-narrow">
+    <h1 style="font-size:26px;margin:0 0 4px">Create your account</h1>
+    <p class="muted" style="font-size:13px;margin:0 0 20px">Join REEL to rate and review films.</p>
+
+    <form asp-controller="Account" asp-action="Register" method="post" class="form-stack">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+        <div class="field">
+            <label asp-for="Username"></label>
+            <input class="input" asp-for="Username" autocomplete="username" />
+            <span asp-validation-for="Username" class="field-error"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="FirstName"></label>
+            <input class="input" asp-for="FirstName" autocomplete="given-name" />
+            <span asp-validation-for="FirstName" class="field-error"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="LastName"></label>
+            <input class="input" asp-for="LastName" autocomplete="family-name" />
+            <span asp-validation-for="LastName" class="field-error"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="Email"></label>
+            <input class="input" asp-for="Email" type="email" autocomplete="email" />
+            <span asp-validation-for="Email" class="field-error"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="Password"></label>
+            <input class="input" asp-for="Password" type="password" autocomplete="new-password" />
+            <span asp-validation-for="Password" class="field-error"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="ConfirmPassword"></label>
+            <input class="input" asp-for="ConfirmPassword" type="password" autocomplete="new-password" />
+            <span asp-validation-for="ConfirmPassword" class="field-error"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Sign up</button>
+    </form>
+
+    <p style="font-size:13px;margin:16px 0 0">
+        Already have an account? <a asp-controller="Account" asp-action="Login">Log in</a>
+    </p>
+</div>

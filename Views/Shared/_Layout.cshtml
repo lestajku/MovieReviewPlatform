@@ -1,0 +1,77 @@
+@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
+    var isLoggedIn = User.Identity?.IsAuthenticated == true;
+    var initials = User.FindFirst("initials")?.Value ?? "?";
+    var displayName = User.Identity?.Name ?? "";
+    var searchQuery = Context.Request.Query["q"].ToString();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] · REEL</title>
+    <link rel="stylesheet" href="~/css/base.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/buttons-forms.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/components.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/movies.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/reviews-rankings.css" asp-append-version="true" />
+</head>
+<body>
+    <nav class="nav">
+        <a class="nav-brand" asp-controller="Home" asp-action="Index">REEL</a>
+        <a asp-controller="Home" asp-action="Index" aria-current="@(controller == "Home" ? "page" : null)">Home</a>
+        <a asp-controller="Movies" asp-action="Index" aria-current="@(controller == "Movies" ? "page" : null)">Movies</a>
+        <a asp-controller="Rankings" asp-action="Index" aria-current="@(controller == "Rankings" ? "page" : null)">Rankings</a>
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-controller="Admin" asp-action="Index" aria-current="@(controller == "Admin" ? "page" : null)">Admin</a>
+        }
+
+        <span class="nav-spacer"></span>
+
+        <form class="nav-search" asp-controller="Movies" asp-action="Index" method="get" role="search">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="opacity:.6;flex:none"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></svg>
+            <label for="nav-q" class="visually-hidden" style="position:absolute;left:-9999px">Search movies</label>
+            <input id="nav-q" type="search" name="q" value="@searchQuery" placeholder="Search movies…" />
+        </form>
+
+        @if (!isLoggedIn)
+        {
+            <a class="btn btn-secondary" asp-controller="Account" asp-action="Login">Log in</a>
+            <a class="btn btn-primary" asp-controller="Account" asp-action="Register">Sign up</a>
+        }
+        else
+        {
+            <a class="btn btn-ghost" asp-controller="Profile" asp-action="Index">
+                <span class="avatar avatar-sm">@initials</span>
+                @displayName
+            </a>
+            <form asp-controller="Account" asp-action="Logout" method="post" class="inline-form">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-secondary btn-icon" aria-label="Log out">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" x2="9" y1="12" y2="12" /></svg>
+                </button>
+            </form>
+        }
+    </nav>
+
+    <main class="page">
+        @if (TempData["Notice"] is string notice && !string.IsNullOrWhiteSpace(notice))
+        {
+            <div class="notice">@notice</div>
+        }
+        @if (TempData["Error"] is string error && !string.IsNullOrWhiteSpace(error))
+        {
+            <div class="notice notice-error">@error</div>
+        }
+
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">REEL — movie reviews &amp; ratings.</footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

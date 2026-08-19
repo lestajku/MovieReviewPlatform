@@ -1,0 +1,83 @@
+@model ProfileViewModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-bottom:24px">
+    <span class="avatar avatar-lg">@Model.Initials</span>
+    <div style="flex:1;min-width:200px">
+        <h1 style="margin:0 0 4px;font-size:26px">@Model.Name</h1>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <span class="muted" style="font-size:13px">@Model.Email</span>
+            <span class="tag tag-outline">@Model.RoleLabel</span>
+            <span class="tag tag-accent">Avg rating: @Model.AverageRatingText</span>
+            <span class="muted" style="font-size:12px">Joined @Model.JoinedAt.ToString("MMM d, yyyy")</span>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(Model.Bio))
+        {
+            <p style="font-size:13px;margin:8px 0 0;opacity:.8;max-width:60ch">@Model.Bio</p>
+        }
+    </div>
+    <a class="btn btn-secondary" asp-controller="Profile" asp-action="Edit">Edit profile</a>
+</div>
+
+<div class="seg" style="margin-bottom:20px">
+    <a class="seg-opt @(Model.Tab == "reviews" ? "is-active" : "")" asp-action="Index" asp-route-tab="reviews">Reviews</a>
+    <a class="seg-opt @(Model.Tab == "rated" ? "is-active" : "")" asp-action="Index" asp-route-tab="rated">Rated movies</a>
+    <a class="seg-opt @(Model.Tab == "favorites" ? "is-active" : "")" asp-action="Index" asp-route-tab="favorites">Favorites</a>
+</div>
+
+@if (Model.Tab == "rated")
+{
+    @if (Model.RatedMovies.Count > 0)
+    {
+        <div class="grid-cards">
+            @foreach (var movie in Model.RatedMovies)
+            {
+                <partial name="_MovieCard" model="movie" />
+            }
+        </div>
+    }
+    else
+    {
+        <p class="empty">No rated movies yet.</p>
+    }
+}
+else if (Model.Tab == "favorites")
+{
+    @if (Model.Favorites.Count > 0)
+    {
+        <div class="grid-cards">
+            @foreach (var movie in Model.Favorites)
+            {
+                <partial name="_MovieCard" model="movie" />
+            }
+        </div>
+    }
+    else
+    {
+        <p class="empty">No favorites yet. Star a film to keep it here.</p>
+    }
+}
+else
+{
+    @if (Model.Reviews.Count > 0)
+    {
+        foreach (var review in Model.Reviews)
+        {
+            <div style="padding:16px 0;border-top:2px solid var(--color-divider)">
+                <div style="display:flex;gap:10px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@review.MovieId"
+                       style="font-weight:700;font-size:14px">@review.MovieTitle</a>
+                    <span class="tag tag-accent">@review.RatingText</span>
+                    <span class="muted" style="font-size:12px">@review.CreatedAt.ToString("MMM d, yyyy")</span>
+                </div>
+                <p style="font-size:13px;margin:0;opacity:.8">@review.Text</p>
+            </div>
+        }
+    }
+    else
+    {
+        <p class="empty">No reviews written yet.</p>
+    }
+}

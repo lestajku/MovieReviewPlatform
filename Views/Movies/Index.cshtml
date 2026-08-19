@@ -1,0 +1,89 @@
+@model CatalogViewModel
+@{
+    ViewData["Title"] = "Movies";
+    var f = Model.Filter;
+}
+
+<div class="page-head">
+    <h1 style="margin:0;font-size:28px">All movies</h1>
+    <span class="muted" style="font-size:13px">@Model.CountText</span>
+</div>
+
+<form method="get" asp-controller="Movies" asp-action="Index" class="filters" id="filterForm">
+    <input type="hidden" name="q" value="@f.Q" />
+
+    <div class="field" style="width:160px">
+        <label for="genre">Genre</label>
+        <select class="input" id="genre" name="genre">
+            <option value="">All genres</option>
+            @foreach (var g in Model.Genres)
+            {
+                <option value="@g" selected="@(f.Genre == g)">@g</option>
+            }
+        </select>
+    </div>
+
+    <div class="field" style="width:150px">
+        <label for="yearRange">Release year</label>
+        <select class="input" id="yearRange" name="yearRange">
+            <option value="">Any year</option>
+            <option value="2020s" selected="@(f.YearRange == "2020s")">2020s</option>
+            <option value="2010s" selected="@(f.YearRange == "2010s")">2010s</option>
+            <option value="2000s" selected="@(f.YearRange == "2000s")">2000s</option>
+            <option value="pre2000" selected="@(f.YearRange == "pre2000")">Before 2000</option>
+        </select>
+    </div>
+
+    <div class="field" style="width:150px">
+        <label for="minRating">Minimum rating</label>
+        <select class="input" id="minRating" name="minRating">
+            <option value="0">Any rating</option>
+            <option value="9" selected="@(f.MinRating == 9)">9+</option>
+            <option value="8" selected="@(f.MinRating == 8)">8+</option>
+            <option value="7" selected="@(f.MinRating == 7)">7+</option>
+            <option value="6" selected="@(f.MinRating == 6)">6+</option>
+        </select>
+    </div>
+
+    <div class="field" style="width:180px">
+        <label for="sort">Sort by</label>
+        <select class="input" id="sort" name="sort">
+            <option value="popular" selected="@(f.Sort == "popular")">Most popular</option>
+            <option value="newest" selected="@(f.Sort == "newest")">Newest added</option>
+            <option value="rating" selected="@(f.Sort == "rating")">Highest rated</option>
+            <option value="title" selected="@(f.Sort == "title")">Title A–Z</option>
+            <option value="year" selected="@(f.Sort == "year")">Release year</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-secondary">Apply</button>
+    <a class="btn btn-ghost" asp-controller="Movies" asp-action="Index">Clear filters</a>
+</form>
+
+@if (!string.IsNullOrWhiteSpace(f.Q))
+{
+    <p class="muted" style="margin:-8px 0 20px;font-size:13px">Search: “@f.Q”</p>
+}
+
+@if (Model.Movies.Count > 0)
+{
+    <div class="grid-cards">
+        @foreach (var movie in Model.Movies)
+        {
+            <partial name="_MovieCard" model="movie" />
+        }
+    </div>
+}
+else
+{
+    <p class="empty">No movies match these filters.</p>
+}
+
+@section Scripts {
+    <script>
+        // Automatsko slanje forme kad se promijeni bilo koji filter.
+        document.querySelectorAll('#filterForm select').forEach(function (el) {
+            el.addEventListener('change', function () { document.getElementById('filterForm').submit(); });
+        });
+    </script>
+}

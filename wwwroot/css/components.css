@@ -1,0 +1,68 @@
+/* 
+   opceniti UI dijelovi: oznake, avatari, kartice, tablice, tabovi, obavijesti
+    */
+
+.avatar {
+  background: var(--color-neutral-800);
+  color: var(--color-bg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  flex: none;
+}
+.avatar-sm { width: 26px; height: 26px; font-size: 11px; }
+.avatar-md { width: 30px; height: 30px; font-size: 11px; }
+.avatar-lg { width: 64px; height: 64px; font-size: 22px; }
+
+/* ---------- oznake ---------- */
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+.tag-accent { background: var(--color-accent); color: #fff; }
+.tag-neutral { background: var(--color-neutral-800); color: var(--color-bg); }
+.tag-outline { border: 2px solid var(--color-divider); }
+
+/* ---------- kartice i tablice ---------- */
+.card {
+  background: var(--color-surface);
+  border: 2px solid var(--color-divider);
+  padding: var(--space-4);
+}
+.card-kicker { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; opacity: .6; font-weight: 700; }
+.card-title { font-family: var(--font-heading); font-weight: 800; }
+.card-body { font-size: 14px; }
+
+.table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--color-surface); }
+.table th, .table td { padding: 10px 12px; text-align: left; border-bottom: 2px solid var(--color-divider); vertical-align: middle; }
+.table th { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; opacity: .7; }
+.table tr:last-child td { border-bottom: 0; }
+.table-wrap { overflow-x: auto; border: 2px solid var(--color-divider); }
+
+/* ---------- segmentirane kartice (tabovi) ---------- */
+.seg { display: inline-flex; border: 2px solid var(--color-divider); background: var(--color-surface); }
+.seg-opt {
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text);
+  border-right: 2px solid var(--color-divider);
+}
+.seg-opt:last-child { border-right: 0; }
+.seg-opt:hover { background: var(--color-bg); text-decoration: none; }
+.seg-opt.is-active { background: var(--color-text); color: var(--color-bg); }
+
+/* ---------- razno ---------- */
+.empty { opacity: .6; padding: 24px 0; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-4); }
+.stat-value { font-size: 28px; }
+.notice { padding: 10px 14px; border: 2px solid var(--color-divider); background: var(--color-surface); margin-bottom: 20px; font-size: 14px; }
+.notice-error { border-color: var(--color-accent); color: var(--color-accent-700); }
+.inline-form { display: inline; }
+.actions-right { display: flex; gap: 6px; justify-content: flex-end; }

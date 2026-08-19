@@ -1,0 +1,56 @@
+/* 
+    kartica filma, mreza/traka filmova, stranica s detaljima filma
+    */
+
+.movie-card { display: flex; flex-direction: column; gap: 8px; position: relative; }
+.poster {
+  aspect-ratio: 2/3;
+  width: 100%;
+  border: 2px solid var(--color-divider);
+  background: var(--color-neutral-800);
+  color: var(--color-bg);
+  display: flex;
+  align-items: flex-end;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  overflow: hidden;
+}
+.poster img { width: 100%; height: 100%; object-fit: cover; }
+.poster-img { padding: 0; }
+.movie-card-title { font-size: 14px; font-weight: 700; line-height: 1.3; }
+.movie-card-meta { font-size: 12px; opacity: .6; }
+.movie-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.fav-btn {
+  position: absolute; top: 6px; right: 6px;
+  background: var(--color-surface); border: 2px solid var(--color-divider);
+  padding: 4px; line-height: 0; cursor: pointer; color: var(--color-text);
+}
+.fav-btn.is-active { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
+
+.rail { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 8px; }
+.rail > * { width: 170px; flex: none; }
+.grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 24px 20px; }
+
+/*  detalji filma  */
+.detail-head { display: flex; gap: var(--space-8); flex-wrap: wrap; margin-bottom: var(--space-8); }
+.detail-poster { width: 240px; flex: none; }
+.detail-body { flex: 1 1 360px; min-width: 280px; }
+.detail-meta { display: flex; gap: var(--space-4); flex-wrap: wrap; font-size: 13px; opacity: .7; margin-bottom: 12px; }
+.detail-score {
+  font-family: var(--font-heading); font-weight: 800; font-size: 40px; color: var(--color-accent-700);
+}
+.rating-picker { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.rating-picker .btn { width: 34px; height: 34px; padding: 0; }
+.rating-picker input { position: absolute; opacity: 0; pointer-events: none; }
+.rating-opt {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px;
+  border: 2px solid var(--color-divider); background: var(--color-surface);
+  font-size: 13px; font-weight: 700; cursor: pointer;
+}
+.rating-picker input:checked + .rating-opt { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
+
+@media (max-width: 640px) {
+  .detail-poster { width: 160px; }
+}

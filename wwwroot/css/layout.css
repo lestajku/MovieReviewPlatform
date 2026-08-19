@@ -1,0 +1,58 @@
+/* 
+   stranica, navigacija, podnozje, sekcije
+   */
+
+.page { flex: 1 1 auto; width: 100%; max-width: 1240px; margin: 0 auto; padding: var(--space-8) var(--space-6) 64px; }
+.page-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+
+/*  navigacija  */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 12px var(--space-6);
+  background: var(--color-surface);
+  border-bottom: 2px solid var(--color-divider);
+}
+.nav-brand {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  color: var(--color-text);
+}
+.nav-brand:hover { color: var(--color-accent); text-decoration: none; }
+.nav a { color: var(--color-text); font-size: 14px; }
+.nav a[aria-current="page"] { color: var(--color-accent-700); text-decoration: underline; text-underline-offset: 4px; }
+.nav-spacer { flex: 1 1 auto; }
+.nav-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-divider);
+  padding: 4px 4px 4px 10px;
+}
+.nav-search input {
+  border: 0; background: transparent; font: inherit; font-size: 13px;
+  width: 160px; outline: none; color: var(--color-text);
+}
+
+/*  sekcije  */
+.section { margin: var(--space-8) 0; }
+.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: var(--space-4); }
+.section-head h2 { margin: 0; font-size: 22px; }
+
+footer.site-footer {
+  border-top: 2px solid var(--color-divider);
+  padding: var(--space-4) var(--space-6);
+  font-size: 12px;
+  opacity: .6;
+}
+
+@media (max-width: 640px) {
+  .page { padding: var(--space-6) var(--space-4) 48px; }
+  .nav { gap: 10px; }
+  .nav-search input { width: 110px; }
+}

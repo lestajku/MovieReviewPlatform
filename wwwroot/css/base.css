@@ -1,0 +1,50 @@
+/* 
+   osnove: varijable, reset, tipografija
+    */
+
+:root {
+  --color-bg: #f3f1ec;
+  --color-surface: #ffffff;
+  --color-text: #1b1917;
+  --color-divider: #1b1917;
+  --color-accent: #e2431f;
+  --color-accent-700: #b32d10;
+  --color-neutral-800: #2a2724;
+
+  --font-body: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  --font-heading: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+
+  --space-2: 8px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: var(--font-heading); font-weight: 800; letter-spacing: -0.02em; }
+
+a { color: var(--color-accent-700); text-decoration: none; }
+a:hover { color: var(--color-accent); text-decoration: underline; }
+
+:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 2px; }
+
+.hr { border: 0; border-top: 2px solid var(--color-divider); margin: var(--space-6) 0; }
+.muted { opacity: .6; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

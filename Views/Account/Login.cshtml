@@ -1,0 +1,38 @@
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="form-narrow">
+    <h1 style="font-size:26px;margin:0 0 4px">Log in</h1>
+    <p class="muted" style="font-size:13px;margin:0 0 20px">Welcome back to REEL.</p>
+
+    <form asp-controller="Account" asp-action="Login" method="post" class="form-stack">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="ReturnUrl" />
+
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+        <div class="field">
+            <label asp-for="Username"></label>
+            <input class="input" asp-for="Username" autocomplete="username" placeholder="e.g. marcus_h" />
+            <span asp-validation-for="Username" class="field-error"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="Password"></label>
+            <input class="input" asp-for="Password" type="password" autocomplete="current-password" />
+            <span asp-validation-for="Password" class="field-error"></span>
+        </div>
+
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px">
+            <input asp-for="RememberMe" type="checkbox" /> Keep me signed in
+        </label>
+
+        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+    </form>
+
+    <p style="font-size:13px;margin:16px 0 0">
+        No account? <a asp-controller="Account" asp-action="Register">Sign up</a>
+    </p>
+</div>

@@ -1,0 +1,83 @@
+@model MovieFormViewModel
+@{
+    ViewData["Title"] = Model.Heading;
+    var action = Model.IsEdit ? "EditMovie" : "CreateMovie";
+}
+
+<h1 style="font-size:26px;margin:0 0 20px">@Model.Heading</h1>
+
+<form asp-controller="Admin" asp-action="@action" method="post" enctype="multipart/form-data" style="max-width:640px">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="CurrentPosterUrl" />
+
+    <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+    <div class="form-stack">
+        <div class="field">
+            <label asp-for="Title"></label>
+            <input class="input" asp-for="Title" />
+            <span asp-validation-for="Title" class="field-error"></span>
+        </div>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div class="field" style="flex:1;min-width:140px">
+                <label asp-for="Year"></label>
+                <input class="input" asp-for="Year" type="number" />
+                <span asp-validation-for="Year" class="field-error"></span>
+            </div>
+            <div class="field" style="flex:1;min-width:140px">
+                <label asp-for="Duration"></label>
+                <input class="input" asp-for="Duration" type="number" />
+                <span asp-validation-for="Duration" class="field-error"></span>
+            </div>
+        </div>
+
+        <div class="field">
+            <label asp-for="Genres"></label>
+            <input class="input" asp-for="Genres" placeholder="Drama, Thriller" />
+            <span asp-validation-for="Genres" class="field-error"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="Director"></label>
+            <input class="input" asp-for="Director" />
+            <span asp-validation-for="Director" class="field-error"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="Cast"></label>
+            <input class="input" asp-for="Cast" placeholder="Actor One, Actor Two" />
+            <span asp-validation-for="Cast" class="field-error"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="Description"></label>
+            <textarea class="input" asp-for="Description" rows="3"></textarea>
+            <span asp-validation-for="Description" class="field-error"></span>
+        </div>
+
+        <div class="field">
+            @if (!string.IsNullOrEmpty(Model.CurrentPosterUrl))
+            {
+                <label>Current poster</label>
+                <img src="@Model.CurrentPosterUrl" alt="Current poster" style="width:100px;aspect-ratio:2/3;object-fit:cover;border:2px solid var(--color-divider);margin-bottom:8px" />
+            }
+            <label asp-for="PosterFile"></label>
+            <input class="input" asp-for="PosterFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" />
+            <span asp-validation-for="PosterFile" class="field-error"></span>
+        </div>
+
+        <div class="field">
+            <label asp-for="PosterUrl"></label>
+            <input class="input" asp-for="PosterUrl" placeholder="https://…" />
+            <span class="muted" style="font-size:12px">Ignored if you upload an image above.</span>
+            <span asp-validation-for="PosterUrl" class="field-error"></span>
+        </div>
+
+        <div style="display:flex;gap:8px">
+            <button type="submit" class="btn btn-primary">@Model.SaveLabel</button>
+            <a class="btn btn-secondary" asp-controller="Admin" asp-action="Index" asp-route-tab="movies">Cancel</a>
+        </div>
+    </div>
+</form>

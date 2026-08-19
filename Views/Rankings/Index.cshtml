@@ -1,0 +1,49 @@
+@model RankingsViewModel
+@{
+    ViewData["Title"] = "Rankings";
+}
+
+<h1 style="font-size:28px;margin:0 0 24px">Rankings</h1>
+
+<section style="margin-bottom:40px">
+    <h2 style="font-size:18px;margin:0 0 4px">Top 10 highest rated</h2>
+    @foreach (var row in Model.BestRated)
+    {
+        <a class="rank-row" asp-controller="Movies" asp-action="Details" asp-route-id="@row.MovieId" style="color:inherit;text-decoration:none">
+            <span class="rank-no"><span class="rank-dot"></span><span class="rank-num">@row.RankText</span></span>
+            <span class="rank-main">
+                <span class="rank-title">@row.Title</span>
+                <span class="rank-meta">@row.MetaText</span>
+            </span>
+            <span class="tag tag-accent">@row.ValueText</span>
+        </a>
+    }
+</section>
+
+<section style="margin-bottom:40px">
+    <h2 style="font-size:18px;margin:0 0 4px">Top 10 most popular</h2>
+    @foreach (var row in Model.MostPopular)
+    {
+        <a class="rank-row" asp-controller="Movies" asp-action="Details" asp-route-id="@row.MovieId" style="color:inherit;text-decoration:none">
+            <span class="rank-no"><span class="rank-dot"></span><span class="rank-num">@row.RankText</span></span>
+            <span class="rank-main">
+                <span class="rank-title">@row.Title</span>
+                <span class="rank-meta">@row.MetaText</span>
+            </span>
+            <span class="tag tag-neutral">@row.ValueText</span>
+        </a>
+    }
+</section>
+
+<section>
+    <h2 style="font-size:18px;margin:0 0 4px">Top reviewers</h2>
+    @foreach (var row in Model.TopReviewers)
+    {
+        <div class="rank-row">
+            <span class="rank-no"><span class="rank-dot"></span><span class="rank-num">@row.RankText</span></span>
+            <span class="avatar avatar-md">@row.Initials</span>
+            <span class="rank-main"><span class="rank-title">@row.Name</span></span>
+            <span class="tag tag-neutral">@row.CountText</span>
+        </div>
+    }
+</section>
